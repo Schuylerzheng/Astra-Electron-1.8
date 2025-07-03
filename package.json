@@ -1,9 +1,9 @@
 {
-  "name": "eagler_1.8",
-  "version": "2.0.0",
+  "name": "Eagler_1.8",
+  "version": "1.0.0",
   "description": "For the CTRL SPRINT!!!",
   "license": "ISC",
-  "author": "Meeeee",
+  "author": "Schuyler Zheng",
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
