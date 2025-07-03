@@ -1,2 +1,6 @@
 # Astra-Electron
-Astra client, into electron, turning it into an exe. This makes ctrl to sprint a thing. 
+Astra client turned into an exe
+
+## Note
+
+<p>Can't make it WASM because you can't tell electron to use JSPI</p>
