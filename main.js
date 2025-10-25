@@ -1,17 +1,19 @@
 const { app, BrowserWindow } = require('electron/main')
 const path = require('path' )
 
-// Put Electron profile (userData) in a Local AppData subfolder to avoid
-// OneDrive or Roaming-folder permission/locking issues that can produce
-// "Unable to move the cache: Access is denied" and quota DB errors on Windows.
-// This must be called before the app 'ready' event.
+// Put Electron profile (userData) in AppData\Roaming\eagler_1.8 as requested.
+// NOTE: This must be called before the app 'ready' event so Chromium uses
+// this path for its profile, caches and databases.
 try {
-  const localAppData = process.env.LOCALAPPDATA || app.getPath('userData')
-  // Use a clearly named folder to avoid clobbering other apps
-  app.setPath('userData', path.join(localAppData, 'Eagler_1.8_user_data'))
+  // Prefer the APPDATA env var (Roaming) and fall back to app.getPath('appData')
+  const roaming = process.env.APPDATA || app.getPath('appData')
+  app.setPath('userData', path.join(roaming, 'eagler_1.8'))
+  // Print the resolved path so you can verify it when you run `npm start`.
+  // eslint-disable-next-line no-console
+  console.log('Electron userData path set to:', app.getPath('userData'))
 } catch (err) {
-  // If setting fails, log a warning and continue; default path will be used
-  // (The warning will appear in the terminal where you run `npm start`.)
+  // If setting fails, log a warning and continue; Electron will use the default
+  // location. The warning will appear in the terminal where you run `npm start`.
   // eslint-disable-next-line no-console
   console.warn('Warning: failed to set userData path:', err && err.message ? err.message : err)
 }
