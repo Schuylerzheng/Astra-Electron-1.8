@@ -1,27 +1,28 @@
 {
-  "name": "Eagler_1.8",
-  "version": "1.0.0",
-  "description": "For the CTRL SPRINT!!!",
-  "license": "ISC",
+  "name": "eagler_1.8",
+  "version": "1.6.0",
+  "description": "Astra client eagler into an exe file using electron",
+  "license": "GNU Affero v3",
   "author": "Schuyler Zheng",
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+  	"package": "electron-forge package",
+  	"make": "electron-forge make"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.8.1",
-    "@electron-forge/maker-deb": "^7.8.1",
-    "@electron-forge/maker-rpm": "^7.8.1",
-    "@electron-forge/maker-squirrel": "^7.8.1",
-    "@electron-forge/maker-zip": "^7.8.1",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.8.1",
-    "@electron-forge/plugin-fuses": "^7.8.1",
+    "@electron-forge/cli": "^7.10.2",
+    "@electron-forge/maker-deb": "^7.10.2",
+    "@electron-forge/maker-rpm": "^7.10.2",
+    "@electron-forge/maker-squirrel": "^7.10.2",
+    "@electron-forge/maker-zip": "^7.10.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.10.2",
+    "@electron-forge/plugin-fuses": "^7.10.2",
     "@electron/fuses": "^1.8.0",
-    "electron": "^36.4.0"
+    "cross-env": "^10.1.0",
+    "electron": "^38.4.0"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1"

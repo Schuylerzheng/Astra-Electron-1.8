@@ -9,8 +9,7 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-	  platforms: ['win32'],
-      config: { arch: ['x64'] },
+      config: {},
     },
     {
       name: '@electron-forge/maker-zip',
