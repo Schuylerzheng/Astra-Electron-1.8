@@ -1,8 +1,8 @@
 {
   "name": "eagler_1.8",
-  "version": "1.0.0",
-  "description": "Astra client eagler into an exe file",
-  "license": "ISC",
+  "version": "1.6.0",
+  "description": "Astra client eagler into an exe file using electron",
+  "license": "GNU Affero v3",
   "author": "Schuyler Zheng",
   "type": "commonjs",
   "main": "main.js",
