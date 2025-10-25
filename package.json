@@ -1,5 +1,5 @@
 {
-  "name": "Eagler_1.8",
+  "name": "eagler_1.8",
   "version": "1.0.0",
   "description": "Astra client eagler into an exe file",
   "license": "ISC",
@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron-forge start",
   	"package": "electron-forge package",
-  	"make": "cross-env NODE_ENV=production electron-forge make"
+  	"make": "electron-forge make"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.10.2",
