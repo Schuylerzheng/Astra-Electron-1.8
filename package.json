@@ -4,7 +4,10 @@
     "description": "Astra Client packaged as an Electron app.",
     "keywords": [],
     "license": "Gnu Affero General Public License v3.0",
-    "author": "Schuyler Zheng",
+    "author": {
+        "name": "Schuyler Zheng",
+        "email": "example@example.com"
+    },
     "main": "main.js",
     "scripts": {
         "start": "electron .",
@@ -38,6 +41,7 @@
             ]
         },
         "linux": {
+            "maintainer": "Schuyler Zheng <example@example.com>"
             "target": [
                 "deb",
                 "rpm",
