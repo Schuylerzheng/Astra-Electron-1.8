@@ -8,13 +8,12 @@ The first step is to download it. You can find the downloads in the releases tab
 
 ### Use it portably (not installing it on the system)
 
-1. Clone it
-2. Run pnpm build
-3. Look in dist/[your os here]-unpacked and open the executable (for linux im pretty sure you have to open it in terminal)
+1. Download the portable archive for your OS
+2. Then run the executable in it 
 
 ### Install it
 
-1. Download it
+1. Download the executable for your os
 2. Run it
 3. Open it from the start menu or look in the place where programs are installed for your os (Program Files for windows)
 
