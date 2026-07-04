@@ -4,7 +4,7 @@
   "description": "Astra Client packaged as an Electron app.",
   "keywords": [],
   "license": "Gnu Affero General Public License v3.0",
-  "author": "",
+  "author": "Schuyler Zheng",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
