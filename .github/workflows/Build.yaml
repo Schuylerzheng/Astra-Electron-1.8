@@ -5,8 +5,42 @@ on:
         branches:
             - master
 
+permissions:
+    contents: write
+
 jobs:
+    prepare-release:
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.get-version.outputs.version }}
+            tag: ${{ steps.get-version.outputs.tag }}
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v6
+
+            - name: Get version from package.json
+              id: get-version
+              run: |
+                  VERSION=$(node -p "require('./package.json').version")
+                  echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+                  echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+            - name: Create draft release
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  if gh release view "${{ steps.get-version.outputs.tag }}" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+                      echo "Release ${{ steps.get-version.outputs.tag }} already exists, skipping creation"
+                  else
+                      gh release create "${{ steps.get-version.outputs.tag }}" \
+                          --repo "$GITHUB_REPOSITORY" \
+                          --title "Astra Client ${{ steps.get-version.outputs.version }}" \
+                          --draft \
+                          --notes "Automated build for version ${{ steps.get-version.outputs.version }}"
+                  fi
+
     build:
+        needs: prepare-release
         strategy:
             fail-fast: false
             matrix:
@@ -26,34 +60,51 @@ jobs:
                       build-cmd: --mac
                       artifact-name: mac
                       artifact-path: dist/*.dmg
-
         runs-on: ${{ matrix.os }}
-
         steps:
             - name: Checkout repo
               uses: actions/checkout@v6
-
             - name: Setup Node.js
               uses: actions/setup-node@v6
               with:
                   node-version: 26
-
             - name: Install pnpm
               uses: pnpm/action-setup@v6
               with:
                   run_install: false
-
             - name: Install rpm tooling (Linux only)
               if: matrix.os == 'ubuntu-latest'
               run: sudo apt-get update && sudo apt-get install -y rpm
-
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
-
-            - name: Build and package
-              run: pnpm exec electron-builder ${{ matrix.build-cmd }}
+            - name: Build and publish
+              run: pnpm exec electron-builder ${{ matrix.build-cmd }} --publish always
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Package portable build (Linux)
+              if: matrix.os == 'ubuntu-latest'
+              run: |
+                  cd dist/linux-unpacked
+                  tar -czf ../Astra-Client-portable-linux-x64.tar.gz .
+
+            - name: Package portable build (Windows)
+              if: matrix.os == 'windows-latest'
+              shell: pwsh
+              run: |
+                  Compress-Archive -Path dist/win-unpacked/* -DestinationPath dist/Astra-Client-portable-win-x64.zip
+
+            - name: Package portable build (macOS)
+              if: matrix.os == 'macos-latest'
+              run: |
+                  APP_PATH=$(find dist -maxdepth 2 -name "*.app" | head -n 1)
+                  ARCH=$(uname -m)
+                  ditto -c -k --keepParent "$APP_PATH" "dist/Astra-Client-portable-mac-$ARCH.zip"
+
+            - name: Upload portable build to release
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: gh release upload "${{ needs.prepare-release.outputs.tag }}" dist/Astra-Client-portable-*.* --repo "$GITHUB_REPOSITORY" --clobber
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
@@ -61,3 +112,22 @@ jobs:
                   name: astra-${{ matrix.artifact-name }}
                   path: ${{ matrix.artifact-path }}
                   if-no-files-found: error
+
+            - name: Upload portable artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: astra-${{ matrix.artifact-name }}-portable
+                  path: dist/Astra-Client-portable-*.*
+                  if-no-files-found: error
+
+    finalize-release:
+        needs: [prepare-release, build]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Publish release (undraft)
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  gh release edit "${{ needs.prepare-release.outputs.tag }}" \
+                      --repo "$GITHUB_REPOSITORY" \
+                      --draft=false
