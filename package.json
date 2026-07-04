@@ -41,7 +41,7 @@
             ]
         },
         "linux": {
-            "maintainer": "Schuyler Zheng <example@example.com>"
+            "maintainer": "Schuyler Zheng <example@example.com>",
             "target": [
                 "deb",
                 "rpm",
