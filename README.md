@@ -9,7 +9,7 @@ The first step is to download it. You can find the downloads in the releases tab
 ### Use it portably (not installing it on the system)
 
 1. Download the portable archive for your OS
-2. Then run the executable in it 
+2. Then run the executable in it
 
 ### Install it
 
