@@ -2,6 +2,9 @@
   "name": "Astra-Electron-1.8",
   "version": "2026.1.0",
   "description": "Astra Client packaged as an Electron app.",
+  "keywords": [],
+  "license": "Gnu Affero General Public License v3.0",
+  "author": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -10,16 +13,13 @@
     "format:check": "oxfmt --check .",
     "lint": "oxlint ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "Gnu Affero General Public License v3.0",
-  "packageManager": "pnpm@11.9.0+sha512.bd682d5d03fe525ef7c9fd6780c6884d1e756ac4c9c9fe00c538782824310dcf90e3ddc4f53835f06dfaebd5085e41855e0bcbb3b60de2ac5bbab89e5036f03b",
   "devDependencies": {
     "electron": "^43.0.0",
     "electron-builder": "^26.15.3",
     "oxfmt": "^0.57.0",
     "oxlint": "^1.72.0"
   },
+  "packageManager": "pnpm@11.9.0+sha512.bd682d5d03fe525ef7c9fd6780c6884d1e756ac4c9c9fe00c538782824310dcf90e3ddc4f53835f06dfaebd5085e41855e0bcbb3b60de2ac5bbab89e5036f03b",
   "build": {
     "appId": "com.SchuylerZheng.Astra-1.8",
     "productName": "Astra Client 1.8",

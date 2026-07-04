@@ -1,5 +1,5 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -12,7 +12,7 @@ function createWindow() {
   });
 
   // Point this at your game's html file
-  win.loadFile('index.html');
+  win.loadFile("index.html");
 
   // Optional: remove the menu bar for a cleaner "app" feel
   win.setMenuBarVisibility(false);
@@ -20,6 +20,6 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
 });
